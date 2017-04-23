@@ -42,6 +42,10 @@ def quiz(request, quiz_title):
         return render(request, 'quiz.html')
 
 
+def show_quizzes(request):
+    return render(request, 'show_quizzes.html', {'quizzes': Quiz.objects.all()})
+
+
 def results(request, quiz_title):
     if Quiz.objects.filter(pk=quiz_title).exists():
         quiz = Quiz.objects.get(pk=quiz_title)

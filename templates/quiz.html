@@ -7,7 +7,7 @@
     <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
 </head>
 <body>
-    {{ quiz.title }} / {{ quiz.type }} / {{ quiz.creation_date }}
+    {{ quiz.title }} / {{ quiz.creation_date | date:"j E o, G:i" }}
     <form method="post" action="">
         {% csrf_token %}
         <ol>
