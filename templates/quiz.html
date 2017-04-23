@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+</head>
+<body>
+    {{ quiz.title }} / {{ quiz.type }} / {{ quiz.creation_date }}
+    <form method="post" action="">
+        {% csrf_token %}
+        <ol>
+            {% for question in quiz.question_set.all %}
+                <li>{{ question.text }}</li>
+                <ul>
+                    {% for answer in question.answer_set.all %}
+                        <input type="radio" name="{{ question.id }}" value="{{ answer.id }}" id="{{ answer.id }}" />
+                        <label for="{{ answer.id }}">{{ answer.text }}</label>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ol>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

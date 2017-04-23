@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+    <script src="{% static "jQuery/jquery-3.2.1.min.js" %}"></script>
+
+    <script>
+        var questionNumber = 0;
+        var answers = [];
+{#        var questions = [];#}
+
+        function add_option(num) {
+            var answerNumber = ++answers[num - 1];
+            var box = $('#question-' + num);
+            box.append('<br>');
+            $('<label/>', {
+                "for": 'answer-' + num + '-' + answerNumber + '-id',
+                text: answerNumber + ': '
+            }).appendTo(box);
+            $('<input/>', {
+                type: 'text',
+                required: 'required',
+                name: 'answer-' + num + '-' + answerNumber + '-title',
+                id: 'answer-' + num + '-' + answerNumber + '-id'
+            }).appendTo(box);
+        }
+
+        function add_question() {
+{#            questions.append({});#}
+            questionNumber++;
+            answers.push(0);
+            var box = $('<div/>', {
+                id: "question-" + questionNumber
+            });
+            $('<label/>', {
+                "for": 'question-' + questionNumber + '-id',
+                text: questionNumber + '. '
+            }).appendTo(box);
+            $('<input/>', {
+                type: 'text',
+                required: 'required',
+                name: 'question-' + questionNumber + '-title',
+                id: 'question-' + questionNumber + '-id'
+            }).appendTo(box);
+            $('<button/>', {
+                text: "Add option",
+                type: "button",
+                onclick: "add_option(" + questionNumber + ")"
+            }).appendTo(box);
+            var qType = $('<select/>', {
+                id: 'question-' + questionNumber + '-type',
+                name: 'question-' + questionNumber + '-type'
+            }).appendTo(box);
+            $('<option/>', {
+                value: 'categorical',
+                text: 'categorical'
+            }).appendTo(qType);
+            $('<option/>', {
+                value: 'scale',
+                text: 'scale'
+            }).appendTo(qType);
+            box.appendTo("#questions");
+        }
+    </script>
+</head>
+<body>
+    <form method="post" action="">
+        {% csrf_token %}
+        Title:
+        <input id="title" type="text" name="title" maxlength="100" required /><br>
+        Type:
+        <select id="type" name="type">
+            <option value="aquisition">Data aquisition</option>
+            <option value="prediction">Answer prediction</option>
+        </select><br>
+        <div id="questions"></div>
+        <button type="button" onclick="add_question()">Add new question</button>
+        <br>
+        <input type="checkbox" id="logged-only" name="logged-only" value="true" />
+        <label for="logged-only">Only logged in users may fill the form.</label>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
