@@ -1,0 +1,14 @@
+.login-screen {
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+}
+
+.errorlist li {
+    display: inline;
+    color: #ffa09d;
+}
+
+.helptext {
+    display: none;
+}

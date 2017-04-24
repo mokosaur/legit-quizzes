@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Registration page{% endblock %}
 
 {% block content %}
-  <h2>Register</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-  </form>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-6 login-screen">
+                <h2>Register</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

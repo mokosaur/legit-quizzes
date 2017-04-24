@@ -5,6 +5,6 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
     url(r'^quiz/(?P<quiz_title>.+)$', views.quiz, name='quiz'),
     url(r'^results/(?P<quiz_title>.+)$', views.results, name='results'),
-    url(r'^quiz/$', views.show_quizzes, name='show_quizzes'),
+    url(r'^$', views.show_quizzes, name='show_quizzes'),
     url(r'^create-quiz/$', views.create_quiz, name='createquiz')
 ]
