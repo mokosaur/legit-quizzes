@@ -12,3 +12,23 @@
 .helptext {
     display: none;
 }
+
+.quiz-table {
+    /*border: solid 1px cornflowerblue;*/
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /*padding: 5px;*/
+}
+
+.quiz-table .header-row div {
+    background-color: #d9ebff;
+}
+
+.quiz-table .row div {
+    border: solid 1px cornflowerblue;
+}
+
+.question-card {
+    margin: 15px 0;
+    /*padding: 10px;*/
+}

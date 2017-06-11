@@ -5,24 +5,39 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "styles.css" %}" rel="stylesheet">
 </head>
 <body>
-    {{ quiz.title }} / {{ quiz.creation_date | date:"j E o, G:i" }}
-    <form method="post" action="">
-        {% csrf_token %}
-        <ol>
-            {% for question in quiz.question_set.all %}
-                <li>{{ question.text }}</li>
-                <ul>
-                    {% for answer in question.answer_set.all %}
-                        <input type="radio" name="{{ question.id }}" value="{{ answer.id }}" id="{{ answer.id }}" />
-                        <label for="{{ answer.id }}">{{ answer.text }}</label>
-                    {% endfor %}
-                </ul>
-            {% endfor %}
-        </ol>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-5"><strong>{{ quiz.title }}</strong></div>
+            <div class="col-3">Created on: <strong>{{ quiz.creation_date | date:"j E o, G:i" }}</strong></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-3 offset-5">Created by: <strong>{{ quiz.author }}</strong></div>
+        </div>
 
-        <input type="submit" value="Submit">
-    </form>
+        <form method="post" action="">
+            {% csrf_token %}
+            {% for question in quiz.question_set.all|dictsort:"id" %}
+                <div class="card question-card">
+                    <div class="card-header">
+                        <div class="col-9">{{ question.id }}. {{ question.text }}</div>
+                    </div>
+                    <div class="card-block">
+                        {% for answer in question.answer_set.all|dictsort:"id" %}
+                            <div class="col-4">
+                                <input type="radio" name="{{ question.id }}" value="{{ answer.id }}" id="{{ answer.id }}" />
+                                <label for="{{ answer.id }}">{{ answer.text }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row justify-content-center">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
+    </div>
 </body>
 </html>

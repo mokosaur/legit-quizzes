@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib import admin
 
 
 class Quiz(models.Model):
@@ -7,6 +8,7 @@ class Quiz(models.Model):
     type = models.CharField(max_length=64)
     logged = models.BooleanField()
     creation_date = models.DateTimeField()
+    author = models.ForeignKey(User, null=True)
 
     def __str__(self):
         return self.title
@@ -29,6 +31,21 @@ class Answer(models.Model):
         return self.text
 
 
+class Label(models.Model):
+    label = models.IntegerField()
+    name = models.CharField(max_length=256)
+    quiz = models.ForeignKey(Quiz, null=True)
+
+    def __str__(self):
+        return str(self.label)
+
+
 class Submit(models.Model):
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True)
+    quiz = models.ForeignKey(Quiz, null=True)
+    label = models.ForeignKey(Label, null=True)
+
+
+class Choice(models.Model):
+    submit = models.ForeignKey(Submit, null=True)
+    answer = models.ForeignKey(Answer, null=True)
